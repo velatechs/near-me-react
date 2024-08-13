@@ -1,6 +1,8 @@
 // src/components/LinkSection.jsx
 import React from 'react';
 import styled from '@emotion/styled';
+import useImageLoader from '../hooks/useImageLoader';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const SectionContainer = styled.div`
   margin: 16px;
@@ -24,20 +26,9 @@ const LinksGrid = styled.div`
   justify-content: center;
 `;
 
-const LinkItem = styled.a`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-`;
+ 
 
-const LinkImage = styled.img`
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 8px;
-`;
+ 
 
 const LinkName = styled.span`
   ${({ theme }) => theme.typography.bodySmall};
@@ -45,6 +36,41 @@ const LinkName = styled.span`
   text-align: center;
   word-break: break-word;
 `;
+const ImageWrapper = styled.div`
+  width: 60px;
+  height: 60px;
+  position: relative;
+  margin-bottom: 8px;
+`;
+
+const LinkImage = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  opacity: ${({ loading }) => (loading ? 0 : 1)};
+  transition: opacity 0.3s ease-in-out;
+`;
+
+const StyledCircularProgress = styled(CircularProgress)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+const LinkItem = ({ link }) => {
+    const loading = useImageLoader(link.link_image);
+  
+    return (
+      <LinkItem href={link.link_URL} target="_blank" rel="noopener noreferrer">
+        <ImageWrapper>
+          <LinkImage src={link.link_image} alt={link.link_name} loading={loading} />
+          {loading && <StyledCircularProgress size={40} thickness={4} />}
+        </ImageWrapper>
+        <LinkName>{link.link_name}</LinkName>
+      </LinkItem>
+    );
+  };
 
 const LinkSection = React.forwardRef(({ category, isSelected }, ref) => {
   return (
