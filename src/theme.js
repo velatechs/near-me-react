@@ -7,7 +7,7 @@ const theme = {
       alternate: '#E0E3E7',
       primaryText: '#14181B',
       secondaryText: '#57636C',
-      primaryBackground: '#F1F4F8',
+      primaryBackground: '#FFFFFF',
       secondaryBackground: '#FFFFFF',
       accent1: '#4C4B39EF',
       accent2: '#4D39D2C0',

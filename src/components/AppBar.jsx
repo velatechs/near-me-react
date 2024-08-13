@@ -7,6 +7,7 @@ const AppBarContainer = styled.div`
   color: ${({ theme }) => theme.colors.info};
   height: 50px;
   display: flex;
+  justify-content: center; // Center the content horizontally
   align-items: center;
   padding: 0 16px;
   position: fixed;
@@ -20,13 +21,13 @@ const Title = styled.h1`
   ${({ theme }) => theme.typography.titleMedium};
   color: ${({ theme }) => theme.colors.info};
 `;
-
 const AppBar = () => {
-  return (
-    <AppBarContainer>
-      <Title>Near Me</Title>
-    </AppBarContainer>
-  );
-};
+    return (
+      <AppBarContainer>
+        <Title>Near Me</Title>
+      </AppBarContainer>
+    );
+  };
 
 export default AppBar;
+ 
