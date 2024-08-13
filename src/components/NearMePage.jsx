@@ -34,6 +34,7 @@ const StickyHeader = styled.div`
   background-color: ${({ theme }) => theme.colors.secondaryBackground};
   z-index: 999;
   transition: all 0.3s ease-in-out;
+  box-shadow: ${props => props.isSticky ? '0 2px 4px rgba(0, 0, 0, 0.1)' : 'none'};
 `;
 
 const NearMePage = ({ data }) => {

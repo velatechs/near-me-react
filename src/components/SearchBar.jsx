@@ -4,8 +4,9 @@ import styled from '@emotion/styled';
 import { Search, X } from 'lucide-react';
 
 const SearchContainer = styled.div`
-  padding: 8px 16px 4px; // Reduced bottom padding
+  padding: 8px 16px 4px;
   background-color: ${({ theme }) => theme.colors.secondaryBackground};
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 const SearchInputWrapper = styled.div`
