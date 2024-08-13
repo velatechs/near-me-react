@@ -49,7 +49,7 @@ function App() {
       ) : data ? (
         <NearMePage data={data} />
       ) : (
-        <div>Loading...</div>
+        <div></div>
       )}
     </ThemeProvider>
   );
