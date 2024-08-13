@@ -1,8 +1,7 @@
-// src/components/BannerSection.jsx
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import useImageLoader from '../hooks/useImageLoader';
-import CircularProgress from '@mui/material/CircularProgress';
+import CustomCircularProgress from './CustomCircularProgress';
 
 const BannerContainer = styled.div`
   position: relative;
@@ -24,13 +23,12 @@ const BannerImage = styled.img`
   transition: opacity 0.3s ease-in-out;
 `;
 
-const StyledCircularProgress = styled(CircularProgress)`
+const StyledCustomCircularProgress = styled(CustomCircularProgress)`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 `;
-
 
 const DotContainer = styled.div`
   position: absolute;
@@ -51,9 +49,9 @@ const Dot = styled.div`
 `;
 
 const BannerSection = ({ banners }) => {
-    const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
-    const loading = useImageLoader(banners[currentBannerIndex].gallery_image);
-  
+  const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
+  const loading = useImageLoader(banners[currentBannerIndex].gallery_image);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBannerIndex((prevIndex) =>
@@ -72,7 +70,7 @@ const BannerSection = ({ banners }) => {
           alt={banners[currentBannerIndex].gallery_name}
           loading={loading}
         />
-        {loading && <StyledCircularProgress size={60} thickness={4} />}
+        {loading && <StyledCustomCircularProgress />}
       </ImageWrapper>
       <DotContainer>
         {banners.map((_, index) => (
