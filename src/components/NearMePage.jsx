@@ -18,22 +18,31 @@ const PageContainer = styled.div`
 
 const ContentContainer = styled.div`
   flex: 1;
-  padding-bottom: 100px;
+  padding-top: 50px; // Account for fixed AppBar
+`;
+
+const StickyWrapper = styled.div`
+  position: relative;
+  height: ${props => props.height}px;
 `;
 
 const StickyHeader = styled.div`
-  position: sticky;
-  top: 50px; // Adjusted to account for AppBar height
-  z-index: 1000;
+  position: ${props => props.isSticky ? 'fixed' : 'relative'};
+  top: ${props => props.isSticky ? '50px' : 'auto'}; // 50px for AppBar height
+  left: 0;
+  right: 0;
   background-color: ${({ theme }) => theme.colors.secondaryBackground};
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  transition: all 0.3s ease-in-out;
 `;
-
-// ... (rest of the imports and styled components remain the same)
 
 const NearMePage = ({ data }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isHeaderSticky, setIsHeaderSticky] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(0);
   const linkSectionRefs = useRef([]);
+  const bannerRef = useRef(null);
+  const headerRef = useRef(null);
 
   const filteredLinkData = data.linkdata.filter(category =>
     category.links.some(link =>
@@ -45,6 +54,23 @@ const NearMePage = ({ data }) => {
     linkSectionRefs.current = linkSectionRefs.current.slice(0, filteredLinkData.length);
   }, [filteredLinkData]);
 
+  useEffect(() => {
+    if (headerRef.current) {
+      setHeaderHeight(headerRef.current.offsetHeight);
+    }
+
+    const handleScroll = () => {
+      if (bannerRef.current && headerRef.current) {
+        const bannerBottom = bannerRef.current.getBoundingClientRect().bottom;
+        const headerTop = headerRef.current.getBoundingClientRect().top;
+        setIsHeaderSticky(bannerBottom <= 50); // 50px is the height of the AppBar
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const activeIndex = useScrollHandler(linkSectionRefs);
 
   const handleSubcategoryClick = (index) => {
@@ -54,16 +80,20 @@ const NearMePage = ({ data }) => {
   return (
     <PageContainer>
       <AppBar />
-      <BannerSection banners={data.banner} />
       <ContentContainer>
-        <StickyHeader>
-          <SearchBar onSearch={setSearchQuery} />
-          <SubcategoryScroll
-            subcategories={data.subcatdata}
-            selectedIndex={activeIndex}
-            onSubcategoryClick={handleSubcategoryClick}
-          />
-        </StickyHeader>
+        <div ref={bannerRef}>
+          <BannerSection banners={data.banner} />
+        </div>
+        <StickyWrapper height={headerHeight}>
+          <StickyHeader ref={headerRef} isSticky={isHeaderSticky}>
+            <SearchBar onSearch={setSearchQuery} />
+            <SubcategoryScroll
+              subcategories={data.subcatdata}
+              selectedIndex={activeIndex}
+              onSubcategoryClick={handleSubcategoryClick}
+            />
+          </StickyHeader>
+        </StickyWrapper>
         {filteredLinkData.map((category, index) => (
           <LinkSection
             key={category.subcat_id}

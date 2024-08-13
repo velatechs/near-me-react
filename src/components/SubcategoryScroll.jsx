@@ -5,20 +5,22 @@ import styled from '@emotion/styled';
 const ScrollContainer = styled.div`
   display: flex;
   overflow-x: auto;
-  padding: 8px 0;
   background-color: ${({ theme }) => theme.colors.secondaryBackground};
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 8px 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const SubcategoryItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80px;
-  padding: 8px;
+  min-width: 70px;
+  padding: 0 8px;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  transform: ${({ isSelected }) => isSelected ? 'translateY(-4px)' : 'none'};
 `;
 
 const SubcategoryImage = styled.img`
@@ -61,7 +63,6 @@ const SubcategoryScroll = ({ subcategories, selectedIndex, onSubcategoryClick })
       {subcategories.map((subcategory, index) => (
         <SubcategoryItem
           key={subcategory.subcat_id}
-          isSelected={index === selectedIndex}
           onClick={() => onSubcategoryClick(index)}
           ref={el => itemRefs.current[index] = el}
         >

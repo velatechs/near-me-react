@@ -4,7 +4,14 @@ import styled from '@emotion/styled';
 import { Search, X } from 'lucide-react';
 
 const SearchContainer = styled.div`
-  padding: 8px 16px;
+  padding: 8px 16px 4px; // Reduced bottom padding
+  background-color: ${({ theme }) => theme.colors.secondaryBackground};
+`;
+
+const SearchInputWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
 `;
 
 const SearchInput = styled.input`
@@ -41,7 +48,7 @@ const SearchBar = ({ onSearch }) => {
 
   return (
     <SearchContainer>
-      <div style={{ position: 'relative' }}>
+      <SearchInputWrapper>
         <SearchInput
           type="text"
           placeholder="Search..."
@@ -56,7 +63,7 @@ const SearchBar = ({ onSearch }) => {
             <X size={20} />
           </IconWrapper>
         )}
-      </div>
+      </SearchInputWrapper>
     </SearchContainer>
   );
 };
