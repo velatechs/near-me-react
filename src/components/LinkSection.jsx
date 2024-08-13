@@ -21,20 +21,17 @@ const SectionTitle = styled.h2`
 
 const LinksGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  gap: 12px;
   justify-content: center;
 `;
-
- 
-
- 
 
 const LinkName = styled.span`
   ${({ theme }) => theme.typography.bodySmall};
   color: ${({ theme }) => theme.colors.primaryText};
   text-align: center;
   word-break: break-word;
+  font-size: 10px;
 `;
 const LinkItemWrapper = styled.a`
   display: flex;
@@ -44,10 +41,10 @@ const LinkItemWrapper = styled.a`
 `;
 
 const ImageWrapper = styled.div`
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   position: relative;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 `;
 
 const LinkImage = styled.img`
@@ -68,32 +65,32 @@ const StyledCustomCircularProgress = styled(CustomCircularProgress)`
 
  
 const LinkItem = ({ link }) => {
-    const loading = useImageLoader(link?.link_image);
-  
-    if (!link) return null; // Return null if link is undefined
-  
-    return (
-      <LinkItemWrapper href={link.link_URL} target="_blank" rel="noopener noreferrer">
-        <ImageWrapper>
-          <LinkImage src={link.link_image} alt={link.link_name} loading={loading} />
-          {loading && <StyledCustomCircularProgress />}
-        </ImageWrapper>
-        <LinkName>{link.link_name}</LinkName>
-      </LinkItemWrapper>
-    );
-  };
-  
-  const LinkSection = React.forwardRef(({ category, isSelected }, ref) => {
-    return (
-      <SectionContainer ref={ref} isSelected={isSelected}>
-        <SectionTitle>{category.sub_category_name}</SectionTitle>
-        <LinksGrid>
-          {category.links.map((link) => (
-            <LinkItem key={link.link_id} link={link} />
-          ))}
-        </LinksGrid>
-      </SectionContainer>
-    );
-  });
-  
-  export default LinkSection;
+  const loading = useImageLoader(link?.link_image);
+
+  if (!link) return null;
+
+  return (
+    <LinkItemWrapper href={link.link_URL} target="_blank" rel="noopener noreferrer">
+      <ImageWrapper>
+        <LinkImage src={link.link_image} alt={link.link_name} loading={loading} />
+        {loading && <StyledCustomCircularProgress />}
+      </ImageWrapper>
+      <LinkName>{link.link_name}</LinkName>
+    </LinkItemWrapper>
+  );
+};
+
+const LinkSection = React.forwardRef(({ category, isSelected }, ref) => {
+  return (
+    <SectionContainer ref={ref} isSelected={isSelected}>
+      <SectionTitle>{category.sub_category_name}</SectionTitle>
+      <LinksGrid>
+        {category.links.map((link) => (
+          <LinkItem key={link.link_id} link={link} />
+        ))}
+      </LinksGrid>
+    </SectionContainer>
+  );
+});
+
+export default LinkSection;

@@ -1,4 +1,5 @@
 // src/theme.js
+import { createTheme } from '@mui/material/styles';
 const theme = {
     colors: {
       primary: '#CF5F39',
