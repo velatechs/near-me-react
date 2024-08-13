@@ -28,7 +28,7 @@ const useScrollHandler = (refs, threshold = 0.5) => {
         }
       }
     }, 100);
-
+//
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [refs, threshold]);

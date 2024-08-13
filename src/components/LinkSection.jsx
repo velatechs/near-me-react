@@ -18,8 +18,9 @@ const SectionTitle = styled.h2`
 
 const LinksGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
   gap: 16px;
+  justify-content: center;
 `;
 
 const LinkItem = styled.a`
@@ -41,6 +42,7 @@ const LinkName = styled.span`
   ${({ theme }) => theme.typography.bodySmall};
   color: ${({ theme }) => theme.colors.primaryText};
   text-align: center;
+  word-break: break-word;
 `;
 
 const LinkSection = React.forwardRef(({ category, isSelected }, ref) => {
